@@ -1,0 +1,1 @@
+Jwt is used for authorisation not authentication.authentication means whether given username and password matches with username and password in database but authorisation means checking whether the person that gives username and password is the same person that gave the username and password while creating the profile

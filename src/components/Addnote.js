@@ -1,10 +1,13 @@
 import React,{useContext,useState} from 'react'
+import alertContext from '../context/notes/Alertcontext';
 import noteContext from '../context/notes/Notecontext'
 import Notes from './Notes';
 
-function Addnote(props) {
+function Addnote() {
     const context = useContext(noteContext)
     const {  addNote } = context;
+    const AlertContext=useContext(alertContext)
+    const {showAlert}=AlertContext;
 
     const [note, setnote] = useState({title:"",description:"",tag:""})
 
@@ -14,9 +17,9 @@ function Addnote(props) {
         document.getElementById('addTitle').value=''
         document.getElementById('addTxt').value=''
         setnote({title:"",description:"",tag:""})
-        props.showAlert("Note added successfully","success")
+        showAlert("Note added successfully","success")
       } catch (error) {
-        props.showAlert("Note not added successfully",'danger')
+        showAlert("Note not added successfully",'danger')
       }
     }
     const onChangeHandle=(event)=>{

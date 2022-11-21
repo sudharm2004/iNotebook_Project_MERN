@@ -1,9 +1,12 @@
 import React,{useContext} from 'react'
+import alertContext from '../context/notes/Alertcontext';
 import noteContext from '../context/notes/Notecontext'
 
 function Noteitem(props) {
-    const {note,updateNote,showAlert}=props;
+    const {note,updateNote}=props;
     const context = useContext(noteContext)
+    const AlertContext=useContext(alertContext)
+    const {showAlert}=AlertContext;
   const {  deleteNote } = context;
     const mouseOut=(event)=>
     {

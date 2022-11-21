@@ -1,9 +1,12 @@
 import React,{useState} from 'react'
 import { Link, useNavigate } from 'react-router-dom';
+import { useContext } from 'react';
+import alertContext from '../context/notes/Alertcontext';
 
-
-function Login(props) {
+function Login() {
   const navigate=useNavigate();
+  const AlertContext=useContext(alertContext);
+  const {showAlert}=AlertContext;
 
   const host="http://localhost:5000"
   const onSubmitHandle=async (event)=>{
@@ -18,12 +21,12 @@ function Login(props) {
     const json=await response.json();
     
     if(json.success){
-      props.showAlert('Logged In successfully','success')
+      showAlert('Logged In successfully','success')
       localStorage.setItem("token",json.authToken)
       navigate('/')
     }
     else{
-      props.showAlert(json.errors,'danger')
+      showAlert(json.errors,'danger')
     }
   }
 

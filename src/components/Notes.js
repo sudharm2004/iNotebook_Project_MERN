@@ -4,14 +4,18 @@ import { useContext, useRef, useState ,useEffect} from 'react'
 import Noteitem from './Noteitem';
 import Addnote from './Addnote';
 import {  useNavigate } from 'react-router-dom';
+import alertContext from '../context/notes/Alertcontext';
 
 
 
-function Notes(props) {
+function Notes() {
   const ref = useRef(null)
   const context = useContext(noteContext)
   const { notes  ,editNote, getUserData,getAllNotes} = context;
+  const AlertContext=useContext(alertContext)
+  const {showAlert}=AlertContext;
   const navigate=useNavigate();
+
   useEffect( () => {
     if (localStorage.getItem('token')) {
       try {
@@ -19,7 +23,7 @@ function Notes(props) {
         getAllNotes(); 
         getUserData();
       } catch (error) {
-        props.showAlert('Server error occurred','danger')
+        showAlert('Server error occurred','danger')
       }
     }
     else
@@ -28,21 +32,6 @@ function Notes(props) {
     }
     // eslint-disable-next-line
   }, [])
-  // useEffect(() => {
-  //     if (localStorage.getItem('token')) {
-  //       try {
-          
-  //         getAllNotes();
-  //       } catch (error) {
-  //         props.showAlert('Server error occurred','danger')
-  //       }
-  //     }
-      // else
-      // {
-      //   navigate('/login')
-      // }
-      // eslint-disable-next-line
-    // }, [])
 
   const [enote, esetnote] = useState({ eid:"",etitle: "", edescription: "", etag: "" })
   const updateNote = (currentNote) => {
@@ -55,9 +44,9 @@ function Notes(props) {
       
       ref.current.click()
       editNote(enote.eid,enote.etitle,enote.edescription,enote.etag);
-      props.showAlert('Note Updated Successfully','success')
+      showAlert('Note Updated Successfully','success')
     } catch (error) {
-      props.showAlert('Note Not Updated Successfully','danger')
+      showAlert('Note Not Updated Successfully','danger')
     }
 
   }
@@ -108,7 +97,7 @@ function Notes(props) {
       <hr />
       <div className="container-fluid row my-2" id="notes">
         { notes.length!==0?
-          notes.map((note) => <Noteitem key={note._id} note={note} updateNote={updateNote} updatNoteBtn={updatNoteBtn} showAlert={props.showAlert}/>)
+          notes.map((note) => <Noteitem key={note._id} note={note} updateNote={updateNote} updatNoteBtn={updatNoteBtn} />)
           :
           <strong>No notes to display!!!Add notes to display.</strong>}
       </div>
